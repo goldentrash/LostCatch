@@ -7,6 +7,15 @@ const API_KEY = process.env.KEY_LOST_API;
 
 module.exports = {
   async fetchList(page) {
+    const url = `${BASE_URL}/getLostGoodsInfoAccToClAreaPd`;
+    const params = {
+      serviceKey: API_KEY,
+      START_YMD: date2str(new Date(Date.now() - STORE_PERIOD_MS)),
+      END_YMD: date2str(new Date()),
+      pageNo: page,
+      numOfRows: NUM_OF_DATA_PER_PAGE,
+    };
+
     try {
       const {
         data: {
@@ -16,15 +25,9 @@ module.exports = {
             },
           },
         },
-      } = await axios.get(
-        `${BASE_URL}/getLostGoodsInfoAccToClAreaPd?serviceKey=${API_KEY}&START_YMD=${date2str(
-          new Date(Date.now() - STORE_PERIOD_MS)
-        )}&END_YMD=${date2str(
-          new Date()
-        )}&pageNo=${page}&numOfRows=${NUM_OF_DATA_PER_PAGE}`
-      );
+      } = await axios.get(url, { params });
 
-      console.log(`fetch ${item.length} lost data(page: ${page})\n`);
+      console.log(`fetch ${item.length} lost data(page: ${page})`);
       return item;
     } catch {
       console.error(`fail to fetch page ${page}`);
@@ -32,6 +35,9 @@ module.exports = {
   },
 
   async fetchDetail(atcId) {
+    const url = `${BASE_URL}/getLostGoodsDetailInfo`;
+    const params = { serviceKey: API_KEY, ATC_ID: atcId };
+
     try {
       const {
         data: {
@@ -39,9 +45,7 @@ module.exports = {
             body: { item },
           },
         },
-      } = await axios.get(
-        `${BASE_URL}/getLostGoodsDetailInfo?serviceKey=${API_KEY}&ATC_ID=${atcId}`
-      );
+      } = await axios.get(url, { params });
 
       return {
         atc_id: atcId,

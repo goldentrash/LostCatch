@@ -10,18 +10,22 @@ module.exports = async () => {
   let page = 0;
   let list;
   do {
-    list = await fetchList(++page);
+    try {
+      list = await fetchList(++page);
 
-    await Promise.all(
-      list.map(async ({ atcId }) => {
-        const data = await fetchDetail(atcId);
-        if (!data) return;
+      await Promise.all(
+        list.map(async ({ atcId }) => {
+          const data = await fetchDetail(atcId);
+          if (!data) return;
 
-        const success = await update(data);
-        if (!success) await insert(data);
-      })
-    );
-  } while (list.length === NUM_OF_DATA_PER_PAGE);
+          const success = await update(data);
+          if (!success) await insert(data);
+        })
+      );
+    } catch {
+      console.log(`skip rest of page ${page}`);
+    }
+  } while (!list || list.length === NUM_OF_DATA_PER_PAGE);
 
   await deleteMarked();
 };
