@@ -6,3 +6,6 @@ exports.knex = knex;
 
 exports.lostPotal = require("./lostPotal");
 exports.lostDB = require("./lostDB");
+
+exports.foundPotal = require("./foundPotal");
+exports.foundDB = require("./foundDB");

@@ -1,6 +1,7 @@
 require("dotenv").config();
 const {
-  lostDB: { find },
+  lostDB: { find: findLost },
+  foundDB: { find: findFound },
 } = require("./repositories");
 
 const express = require("express");
@@ -9,7 +10,13 @@ app.use(express.json());
 app.use(require("morgan")("dev"));
 
 app.get("/lost", async (req, res, next) => {
-  const result = await find(req.query);
+  const result = await findLost(req.query);
+
+  return res.status(200).json({ result });
+});
+
+app.get("/found", async (req, res, next) => {
+  const result = await findFound(req.query);
 
   return res.status(200).json({ result });
 });

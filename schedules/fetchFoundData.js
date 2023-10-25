@@ -1,6 +1,6 @@
 const {
-  lostPotal: { fetchDetail, fetchList },
-  lostDB: { mark2delete, deleteMarked, update, insert },
+  foundPotal: { fetchDetail, fetchList },
+  foundDB: { mark2delete, deleteMarked, update, insert },
 } = require("../repositories");
 const { NUM_OF_DATA_PER_PAGE } = require("../constant");
 
@@ -14,8 +14,8 @@ const job = async () => {
       list = await fetchList(++page);
 
       await Promise.all(
-        list.map(async ({ atcId }) => {
-          const data = await fetchDetail(atcId);
+        list.map(async ({ atcId, fdSn }) => {
+          const data = await fetchDetail(atcId, fdSn);
           if (!data) return;
 
           const success = await update(data);
