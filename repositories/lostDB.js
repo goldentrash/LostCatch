@@ -35,7 +35,7 @@ module.exports = {
     title,
     date,
     office,
-    numRows,
+    numRows = 50,
     page,
   }) {
     const query = knex("lost");
