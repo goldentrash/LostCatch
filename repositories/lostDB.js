@@ -27,6 +27,7 @@ module.exports = {
   },
 
   async find({
+    atc_id,
     location_city,
     location_detail,
     location_type,
@@ -39,6 +40,7 @@ module.exports = {
   }) {
     const query = knex("lost");
 
+    if (atc_id) query.where("atc_id", atc_id);
     if (location_city)
       query.where("location_city", "LIKE", `%${location_city}%`);
     if (location_detail)
