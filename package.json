@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node --watch ./app.js",
+    "launch": "pm2 start app.js",
     "db:migrate": "knex migrate:latest",
     "db:rollback": "knex migrate:rollback"
   },
