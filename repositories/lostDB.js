@@ -25,4 +25,59 @@ module.exports = {
     await knex("lost").insert(data);
     console.log(`insert ${data.atc_id}`);
   },
+
+  async find({
+    location_city,
+    location_detail,
+    location_type,
+    item,
+    title,
+    date,
+    office,
+    numRows,
+    page,
+  }) {
+    const query = knex("lost");
+
+    if (location_city) query.whereLike("location_city", `%${location_city}%`);
+    if (location_detail)
+      query.whereLike("location_detail", `%${location_detail}%`);
+    if (location_type) query.whereLike("location_type", `%${location_type}%`);
+    if (item) query.whereLike("item", `%${item}%`);
+    if (title) query.whereLike("title", `%${title}%`);
+    if (date) query.where("date", date);
+    if (office) query.whereLike("office", `%${office}%`);
+
+    if (numRows) query.limit(numRows);
+    if (numRows && page) query.offset(numRows * page);
+
+    const dataList = await query.select();
+    return dataList.map(
+      ({
+        atc_id,
+        image,
+        location_city,
+        location_detail,
+        location_type,
+        item,
+        title,
+        status,
+        date,
+        office,
+        tel,
+      }) => ({
+        atc_id,
+        image,
+        location_city,
+        location_detail,
+        location_type,
+        item,
+        title,
+        status,
+        date,
+        office,
+        tel,
+      })
+    );
+  },
 };

@@ -1,4 +1,24 @@
 require("dotenv").config();
+const {
+  lostDB: { find },
+} = require("./repositories");
 
-const fetchLostData = require("./schedules/fetchLostData");
-fetchLostData();
+const express = require("express");
+const app = express();
+app.use(express.json());
+app.use(require("morgan")("dev"));
+
+app.get("/lost", async (req, res, next) => {
+  const result = await find(req.query);
+
+  return res.status(200).json({ result });
+});
+
+app.all("/", (req, res, next) => {
+  return res.status(404).end();
+});
+
+const port = 3_000;
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
