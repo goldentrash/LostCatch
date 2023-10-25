@@ -39,14 +39,16 @@ module.exports = {
   }) {
     const query = knex("lost");
 
-    if (location_city) query.whereLike("location_city", `%${location_city}%`);
+    if (location_city)
+      query.where("location_city", "LIKE", `%${location_city}%`);
     if (location_detail)
-      query.whereLike("location_detail", `%${location_detail}%`);
-    if (location_type) query.whereLike("location_type", `%${location_type}%`);
-    if (item) query.whereLike("item", `%${item}%`);
-    if (title) query.whereLike("title", `%${title}%`);
+      query.where("location_detail", "LIKE", `%${location_detail}%`);
+    if (location_type)
+      query.where("location_type", "LIKE", `%${location_type}%`);
+    if (item) query.where("item", "LIKE", `%${item}%`);
+    if (title) query.where("title", "LIKE", `%${title}%`);
     if (date) query.where("date", date);
-    if (office) query.whereLike("office", `%${office}%`);
+    if (office) query.where("office", "LIKE", `%${office}%`);
 
     if (numRows) query.limit(numRows);
     if (numRows && page) query.offset(numRows * page);
