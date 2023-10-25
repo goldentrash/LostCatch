@@ -10,6 +10,7 @@ const {
 const express = require("express");
 const app = express();
 app.use(express.json());
+app.use(require("cors")());
 app.use(require("morgan")("dev"));
 
 app.get("/lost", async (req, res, _next) => {
