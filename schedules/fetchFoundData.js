@@ -1,12 +1,10 @@
-const { scheduleJob } = require("node-schedule");
 const {
   foundPotal: { fetchDetail, fetchList },
   foundDB: { mark2delete, deleteMarked, update, insert },
 } = require("../repositories");
-const { NUM_OF_DATA_PER_PAGE, FOUND_SCHEDULE } = require("../constant");
+const { NUM_OF_DATA_PER_PAGE } = require("../constant");
 
-console.log(`schedule fetchFound at ${JSON.stringify(FOUND_SCHEDULE)}`);
-scheduleJob(FOUND_SCHEDULE, async () => {
+module.exports = async () => {
   await mark2delete();
 
   let page = 0;
@@ -30,4 +28,4 @@ scheduleJob(FOUND_SCHEDULE, async () => {
   } while (!list || list.length === NUM_OF_DATA_PER_PAGE);
 
   await deleteMarked();
-});
+};
