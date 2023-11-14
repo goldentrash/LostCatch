@@ -5,8 +5,8 @@
   "author": "white piano",
   "license": "MIT",
   "scripts": {
-    "start": "node --watch ./app.js",
-    "launch": "pm2 start app.js",
+    "build": "zip -r lambda.zip .",
+    "fetch": "node ./fetch.js",
     "db:migrate": "knex migrate:latest",
     "db:rollback": "knex migrate:rollback"
   },
@@ -20,5 +20,7 @@
     "mysql2": "^3.6.1",
     "node-schedule": "^2.1.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@vendia/serverless-express": "^4.10.4"
+  }
 }

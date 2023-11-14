@@ -1,6 +1,4 @@
 require("dotenv").config();
-require("./schedules/fetchFoundData");
-require("./schedules/fetchLostData");
 
 const {
   lostDB: { find: findLost },
@@ -29,7 +27,4 @@ app.all("/", (_req, res, _next) => {
   return res.status(404).end();
 });
 
-const { PORT } = require("./constant");
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+module.exports = app;
