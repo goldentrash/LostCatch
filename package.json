@@ -7,10 +7,12 @@
   "scripts": {
     "build": "zip -r lambda.zip .",
     "fetch": "node ./fetch.js",
+    "push": "node ./push.js",
     "db:migrate": "knex migrate:latest",
     "db:rollback": "knex migrate:rollback"
   },
   "dependencies": {
+    "@aws-sdk/client-sns": "^3.465.0",
     "axios": "^1.5.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

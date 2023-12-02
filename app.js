@@ -3,6 +3,7 @@ require("dotenv").config();
 const {
   lostDB: { find: findLost },
   foundDB: { find: findFound },
+  notification: { subscribeViaEmail },
 } = require("./repositories");
 
 const express = require("express");
@@ -19,6 +20,12 @@ app.get("/lost", async (req, res, _next) => {
 
 app.get("/found", async (req, res, _next) => {
   const result = await findFound(req.query);
+
+  return res.status(200).json({ result });
+});
+
+app.get("/subs", async (req, res, _next) => {
+  const result = await subscribeViaEmail(req.query.email);
 
   return res.status(200).json({ result });
 });
