@@ -24,7 +24,7 @@ app.get("/found", async (req, res, _next) => {
   return res.status(200).json({ result });
 });
 
-app.get("/subs", async (req, res, _next) => {
+app.post("/subs", async (req, res, _next) => {
   const result = await subscribeViaEmail(req.query.email);
 
   return res.status(200).json({ result });
